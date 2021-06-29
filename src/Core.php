@@ -67,10 +67,8 @@ class Core
 
         if (empty($modx->config)) {
             $modx->getSettings();
-
-            return true;
         }
 
-        return false;
+        return $modx;
     }
 }
