@@ -14,6 +14,11 @@ class Search extends \mmaurice\modx\Core
         return $this->modx->db->escape($string);
     }
 
+    public function getInsertId()
+    {
+        return $this->modx->db->getInsertId();
+    }
+
     public function query($sql)
     {
         return $this->modx->db->query($sql);
