@@ -4,6 +4,8 @@ namespace mmaurice\modx;
 
 class Core
 {
+    const DEFAULT_HOST = 'http://localhost/';
+
     public $modx;
 
     protected $options;
