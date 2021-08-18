@@ -13,10 +13,7 @@ class Core
     public function __construct($options = [])
     {
         $this->options = $options;
-
-        $this->init();
-
-        $this->modx = $modx;
+        $this->modx = $this->init();
 
         return;
     }
