@@ -4,6 +4,16 @@ namespace mmaurice\modx;
 
 class Search extends \mmaurice\modx\Core
 {
+    public function getFullTableName($string)
+    {
+        return $this->modx->getFullTableName($string);
+    }
+
+    public function escape($string)
+    {
+        return $this->modx->db->escape($string);
+    }
+
     public function query($sql)
     {
         return $this->modx->db->query($sql);
