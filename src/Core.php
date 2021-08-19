@@ -18,6 +18,11 @@ class Core
         return;
     }
 
+    public function getId()
+    {
+        return $this->modx->documentIdentifier;
+    }
+
     public function init()
     {
         if (php_sapi_name() == 'cli') {
