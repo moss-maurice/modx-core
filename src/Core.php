@@ -10,10 +10,10 @@ class Core
 
     protected $options;
 
-    public function __construct($options = [])
+    public function __construct($options = [], $debug = false)
     {
         $this->options = $options;
-        $this->modx = $this->init();
+        $this->modx = $this->init($debug);
 
         return;
     }
