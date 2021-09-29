@@ -23,15 +23,17 @@ class Core
         return $this->modx->documentIdentifier;
     }
 
-    public function init()
+    public function init($debug = false)
     {
         if (php_sapi_name() == 'cli') {
             $_SERVER['DOCUMENT_ROOT'] = (array_key_exists('docRoot', $this->options) ? $this->options['docRoot'] : '');
             $_SERVER['REMOTE_ADDR'] = (array_key_exists('host', $this->options) ? $this->options['host'] : self::DEFAULT_HOST);
         }
 
-        $_SESSION['mgrRole'] = 1;
-        $_SESSION['mgrValidated'] = true;
+        if ($debug) {
+            $_SESSION['mgrRole'] = 1;
+            $_SESSION['mgrValidated'] = true;
+        }
 
         if (!defined('MODX_API_MODE')) {
             define('MODX_API_MODE', true);
