@@ -6,22 +6,22 @@ class Search extends \mmaurice\modx\Core
 {
     public function getFullTableName($string)
     {
-        return $this->modx->getFullTableName($string);
+        return $this->modx()->getFullTableName($string);
     }
 
     public function escape($string)
     {
-        return $this->modx->db->escape($string);
+        return $this->db()->escape($string);
     }
 
     public function getInsertId()
     {
-        return $this->modx->db->getInsertId();
+        return $this->db()->getInsertId();
     }
 
     public function query($sql)
     {
-        return $this->modx->db->query($sql);
+        return $this->db()->query($sql);
     }
 
     public function search($filter = [])
@@ -37,10 +37,10 @@ class Search extends \mmaurice\modx\Core
     {
         $resource = $this->search($filter);
 
-        if ($this->modx->db->getRecordCount($resource)) {
+        if ($this->db()->getRecordCount($resource)) {
             $results = [];
 
-            while ($row = $this->modx->db->getRow($resource)) {
+            while ($row = $this->db()->getRow($resource)) {
                 $results[] = $row;
             }
 
@@ -54,8 +54,8 @@ class Search extends \mmaurice\modx\Core
     {
         $resource = $this->search($filter);
 
-        if ($this->modx->db->getRecordCount($resource)) {
-            $item = $this->modx->db->getRow($resource);
+        if ($this->db()->getRecordCount($resource)) {
+            $item = $this->db()->getRow($resource);
 
             return $item;
         }
@@ -66,20 +66,22 @@ class Search extends \mmaurice\modx\Core
     public function getRawSql($filter = [])
     {
         if (!array_key_exists('alias', $filter)) {
-            $filter['alias'] = 't';
+            $filter['alias'] = '';
         }
 
         if (!array_key_exists('select', $filter)) {
-            $filter['select'] = $filter['alias'] . '.*';
+            $filter['select'] = (!empty($filter['alias']) ? $filter['alias'] . '.*' : '*');
         }
 
         if (!is_array($filter['select'])) {
-            $filter['select'] = [$filter['select']];
+            $filter['select'] = [
+                $filter['select'],
+            ];
         }
 
         return "SELECT" . PHP_EOL
             . "\t" . implode("," . PHP_EOL . "\t", $filter['select']) . PHP_EOL
-            . "FROM " . $filter['from'] . " " . $filter['alias'] . PHP_EOL
+            . "FROM " . $filter['from'] . (!empty($filter['alias']) ? " " . $filter['alias'] : '') . PHP_EOL
             . (!empty($filter['join']) ? implode(PHP_EOL, $filter['join']) . PHP_EOL : "")
             . (!empty($filter['where']) ? "WHERE" . PHP_EOL . "\t" . implode(PHP_EOL . "\t", $filter['where']) . PHP_EOL : "")
             . (!empty($filter['group']) ? "GROUP BY" . PHP_EOL . "\t" . implode("," . PHP_EOL . "\t", $filter['group']) . PHP_EOL : "")

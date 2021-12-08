@@ -23,7 +23,17 @@ class Core
         return $this->modx->documentIdentifier;
     }
 
-    public function init($debug = false)
+    public function modx()
+    {
+        return $this->modx;
+    }
+
+    public function db()
+    {
+        return $this->modx->db;
+    }
+
+    protected function init($debug = false)
     {
         if (php_sapi_name() == 'cli') {
             $_SERVER['DOCUMENT_ROOT'] = (array_key_exists('docRoot', $this->options) ? $this->options['docRoot'] : '');
